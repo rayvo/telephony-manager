@@ -10,9 +10,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.NeighboringCellInfo;
@@ -20,12 +20,15 @@ import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	TextView textView1;
-	private static final String LOG_TAG = "MainActivity";
+	TextView textView;
+	private static final String LOG_TAG = "WHEREAMI-MainActivity";
 	private static final String GOOGLE_URL = "http://www.google.com/glm/mmap";
 	
 	public static double lat = 0;
@@ -36,12 +39,25 @@ public class MainActivity extends Activity {
 	int mcc = 450; //Korea
 	int mnc = 5;   //SK Telecom
 
+	
+	Intent restIntent = null;
+	
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		textView1 = (TextView) findViewById(R.id.textView1);
-
+		textView = (TextView) findViewById(R.id.textView1);
+		Button btn = (Button) findViewById(R.id.btn);
+		btn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				postData();
+			}
+		});
+		restIntent = new Intent(this, AndroidRESTClientActivity.class);
 		TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 
 		GsmCellLocation cell = null;
@@ -98,16 +114,8 @@ public class MainActivity extends Activity {
 		// getting information if phone is in roaming
 		boolean isRoaming = tm.isNetworkRoaming();
 
-		String info = "Phone Details:\n";
-		info += "\n IMEI Number:" + IMEINumber;
-		info += "\n SubscriberID:" + subscriberID;
-		info += "\n Sim Serial Number:" + SIMSerialNumber;
-		info += "\n Network Country ISO:" + networkCountryISO;
-		info += "\n SIM Country ISO:" + SIMCountryISO;
-		info += "\n Software Version:" + softwareVersion;
-		info += "\n Voice Mail Number:" + voiceMailNumber;
-		info += "\n Phone Network Type:" + strphoneType;
-		info += "\n In Roaming? :" + isRoaming;
+		//String info = "Cell tower location:\n";
+		
 
 		if (strphoneType.equals("GSM")) {
 			cell = (GsmCellLocation) tm.getCellLocation();
@@ -125,10 +133,8 @@ public class MainActivity extends Activity {
 				Log.d(LOG_TAG, "mnc: " + str_mnc);
 			}
 
-			info += "\n Cell ID :" + cid;
-			info += "\n LAC :" + lac;
-
-			textView1.setText(textView1.getText() + info);
+		
+			//textView.setText(textView.getText() + info);
 
 			String str_cid = String.valueOf(cid);
 			String str_lac = String.valueOf(lac);
@@ -141,8 +147,7 @@ public class MainActivity extends Activity {
 			new NetworkTask().execute(new String[] { str_cid, str_lac, str_mcc, str_mnc });
 
 		} else {
-			info += "\n Lat:" + lat;
-			info += "\n Lon :" + lon;
+			
 		}
 
 	}
@@ -227,14 +232,16 @@ public class MainActivity extends Activity {
 						runOnUiThread(new Runnable() {
 							@Override
 							public void run() {
-								String info = "\n mcc:" + mcc;
-								info += "\n mnc:" + mnc;
-								info += "\n Lat:" + lat;
-								info += "\n Lon :" + lon;
-
+								String info = "Lat:" + lat;
+								info += "\nLon:" + lon;
+								
+								restIntent.putExtra("LAT", String.valueOf(lat));
+								restIntent.putExtra("LON", String.valueOf(lon));
+								
 								TextView txtView = (TextView) MainActivity.this
 										.findViewById(R.id.textView1);
 								txtView.setText(txtView.getText() + info);
+								System.out.println("test");
 							}
 						});
 					} catch (Exception e) {
@@ -251,4 +258,63 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	public void postData() {
+		
+		String query = createQuery();
+		restIntent.putExtra("QUERY", query);
+		startActivity(restIntent);
+	}
+	
+	
+		 
+
+	private String createQuery() {
+		String result = "";
+		TextView txv = (TextView) findViewById(R.id.firstKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + txv.getText().toString().trim();
+		}
+		
+		txv = (TextView) findViewById(R.id.secondKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + "&" + txv.getText().toString().trim();
+		}
+		
+		txv = (TextView) findViewById(R.id.thirdKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + "&" + txv.getText().toString().trim();
+		}
+		
+		txv = (TextView) findViewById(R.id.fourthKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + "&" + txv.getText().toString().trim();
+		}
+		
+		txv = (TextView) findViewById(R.id.fifthKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + "&" + txv.getText().toString().trim();
+		}
+		
+		txv = (TextView) findViewById(R.id.sixthKW);
+		if (txv.getText().toString().trim().equals("")) {
+			return result;
+		} else {
+			result = result + "&" + txv.getText().toString().trim();
+		}
+
+		return result;
+	}
+
+	
+	
 }
