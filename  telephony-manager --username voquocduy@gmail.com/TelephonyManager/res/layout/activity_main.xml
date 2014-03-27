@@ -6,16 +6,155 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity11" >
-
-    <TextView
+    tools:context=".MainActivity11" >   
+    
+    <TableLayout 
+    android:id="@+id/tableLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="1"
+    android:stretchColumns="2" >
+ 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <Button
+ 		android:id="@+id/btn"
+	    android:layout_width="96dp"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentBottom="true"
+	    android:layout_centerHorizontal="true"
+	    android:onClick="postData"
+	    android:text="Done" />
+ 
+         <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="38dp"
-        android:layout_marginTop="30dp"
-        android:text="Phone Details:" />
+        />
+         
+
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1st Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/firstKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:layout_span="2" />
+    </TableRow>
+ 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2nd Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/secondKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textCapWords"
+            android:layout_span="2" />
+    </TableRow>
+ 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3rd Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/thirdKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_span="2" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4th Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/fourthKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_span="2" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5th Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/fifthKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_span="2" />
+    </TableRow>
+    
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+ 
+        <TextView
+            style=""
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6th Keyword" >
+        </TextView>
+ 
+        <EditText
+            android:id="@+id/sixthKW"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:layout_span="2" />
+    </TableRow>
+ 
+
+ 
+</TableLayout>
 
 </RelativeLayout>
